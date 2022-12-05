@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.regex.Pattern;
 
 public class AddStaffActivity extends AppCompatActivity implements View.OnClickListener{
-
+//thêm nhân viên
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     //"(?=.*[@#$%^&+=])" +     // at least 1 special character

@@ -1,6 +1,7 @@
 package com.sinhvien.orderdrinkapp.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -112,5 +113,10 @@ public class CreateDatabase extends SQLiteOpenHelper {
     //mở kết nối csdl
     public SQLiteDatabase open(){
         return this.getWritableDatabase();
+    }
+
+    public Cursor Getdata(String sql) {
+        SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(sql, null);
     }
 }

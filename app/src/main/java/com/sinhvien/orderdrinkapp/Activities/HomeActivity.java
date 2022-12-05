@@ -22,6 +22,9 @@ import com.sinhvien.orderdrinkapp.Fragments.DisplayCategoryFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayStaffFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayStatisticFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayTableFragment;
+import com.sinhvien.orderdrinkapp.Fragments.DisplayThongKeFragment;
+import com.sinhvien.orderdrinkapp.Fragments.DisplayTurnoverFragment;
+import com.sinhvien.orderdrinkapp.Fragments.FrmTop;
 import com.sinhvien.orderdrinkapp.R;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,6 +105,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 DisplayStatisticFragment displayStatisticFragment = new DisplayStatisticFragment();
                 tranDisplayStatistic.replace(R.id.contentView,displayStatisticFragment);
                 tranDisplayStatistic.commit();
+                navigationView.setCheckedItem(item.getItemId());
+                drawerLayout.closeDrawers();
+                break;
+            case R.id.nav_thongke:
+                //hiển thị tương ứng trên navigation
+                FragmentTransaction tranDisplayThongKe = fragmentManager.beginTransaction();
+                DisplayThongKeFragment displayThongKeFragment = new DisplayThongKeFragment();
+                tranDisplayThongKe.replace(R.id.contentView,displayThongKeFragment);
+                tranDisplayThongKe.commit();
+                navigationView.setCheckedItem(item.getItemId());
+                drawerLayout.closeDrawers();
+                break;
+
+            case R.id.nav_doanhthu:
+                //hiển thị tương ứng trên navigation
+                FragmentTransaction tranDisplayDoanhThu = fragmentManager.beginTransaction();
+                DisplayTurnoverFragment displayDoanhThuFragment = new DisplayTurnoverFragment();
+                tranDisplayDoanhThu.replace(R.id.contentView,displayDoanhThuFragment);
+                tranDisplayDoanhThu.commit();
+                navigationView.setCheckedItem(item.getItemId());
+                drawerLayout.closeDrawers();
+                break;
+
+            case R.id.nav_top10:
+                //hiển thị tương ứng trên navigation
+                FragmentTransaction tranDisplaytop10 = fragmentManager.beginTransaction();
+                FrmTop frgtop10 = new FrmTop();
+                tranDisplaytop10.replace(R.id.contentView,frgtop10);
+                tranDisplaytop10.commit();
                 navigationView.setCheckedItem(item.getItemId());
                 drawerLayout.closeDrawers();
                 break;

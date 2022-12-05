@@ -39,7 +39,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public class AddMenuActivity extends AppCompatActivity implements View.OnClickListener{
-
+//thêm thực đơn
     Button BTN_addmenu_ThemMon;
     RelativeLayout layout_trangthaimon;
     ImageView IMG_addmenu_ThemHinh, IMG_addmenu_back;

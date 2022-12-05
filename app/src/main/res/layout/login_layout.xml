@@ -58,6 +58,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tdn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/muli"
@@ -83,6 +84,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mkdn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/muli"
@@ -99,15 +101,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             >
+
             <CheckBox
+                android:id="@+id/luuthongtin"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:text="Lưu đăng nhập"
-                android:buttonTint="@color/black"
                 android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                />
+                android:buttonTint="@color/black"
+                android:text="Lưu đăng nhập"
+                android:textColor="@color/black" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
