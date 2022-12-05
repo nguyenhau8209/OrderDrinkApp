@@ -120,12 +120,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_doanhthu:
                 //hiển thị tương ứng trên navigation
-                FragmentTransaction tranDisplayDoanhThu = fragmentManager.beginTransaction();
-                DisplayTurnoverFragment displayDoanhThuFragment = new DisplayTurnoverFragment();
-                tranDisplayDoanhThu.replace(R.id.contentView,displayDoanhThuFragment);
-                tranDisplayDoanhThu.commit();
-                navigationView.setCheckedItem(item.getItemId());
-                drawerLayout.closeDrawers();
+                if (maquyen==1) {
+                    FragmentTransaction tranDisplayDoanhThu = fragmentManager.beginTransaction();
+                    DisplayTurnoverFragment displayDoanhThuFragment = new DisplayTurnoverFragment();
+                    tranDisplayDoanhThu.replace(R.id.contentView, displayDoanhThuFragment);
+                    tranDisplayDoanhThu.commit();
+                    navigationView.setCheckedItem(item.getItemId());
+                    drawerLayout.closeDrawers();
+                }else {
+                    Toast.makeText(this, "Bạn không có quyền truy cập vào chức năng này!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.nav_top10:

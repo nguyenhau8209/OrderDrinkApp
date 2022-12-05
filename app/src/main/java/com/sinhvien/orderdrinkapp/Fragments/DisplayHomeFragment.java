@@ -1,7 +1,9 @@
 package com.sinhvien.orderdrinkapp.Fragments;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,6 +49,8 @@ public class DisplayHomeFragment extends Fragment implements View.OnClickListene
     List<DonDatDTO> donDatDTOS;
     AdapterRecycleViewCategory adapterRecycleViewCategory;
     AdapterRecycleViewStatistic adapterRecycleViewStatistic;
+    int maquyen=0;
+    SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +82,10 @@ public class DisplayHomeFragment extends Fragment implements View.OnClickListene
         layout_displayhome_XemNV.setOnClickListener(this);
         txt_displayhome_ViewAllCategory.setOnClickListener(this);
         txt_displayhome_ViewAllStatistic.setOnClickListener(this);
+
+        //lấy file share prefer
+        sharedPreferences = getActivity().getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
+        maquyen = sharedPreferences.getInt("maquyen",0);
 
         return view;
     }
@@ -136,12 +145,15 @@ public class DisplayHomeFragment extends Fragment implements View.OnClickListene
 
                 break;
             case R.id.layout_displayhome_XemNV:
-                FragmentTransaction tranDisplayStaff= getActivity().getSupportFragmentManager().beginTransaction();
-                tranDisplayStaff.replace(R.id.contentView,new DisplayStaffFragment());
-                tranDisplayStaff.addToBackStack(null);
-                tranDisplayStaff.commit();
-                navigationView.setCheckedItem(R.id.nav_staff);
-
+                if (maquyen==1) {
+                    FragmentTransaction tranDisplayStaff = getActivity().getSupportFragmentManager().beginTransaction();
+                    tranDisplayStaff.replace(R.id.contentView, new DisplayStaffFragment());
+                    tranDisplayStaff.addToBackStack(null);
+                    tranDisplayStaff.commit();
+                    navigationView.setCheckedItem(R.id.nav_staff);
+                }else {
+                    Toast.makeText(getActivity(), "Bạn không có quyền truy cập vào chức năng này!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.txt_displayhome_ViewAllCategory:

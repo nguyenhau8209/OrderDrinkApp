@@ -21,13 +21,14 @@
 
     </Spinner>
 
-    <EditText
+    <TextView
         android:id="@+id/edDate_ThongKe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/drawable_addcattory"
         android:hint="Nhập vào tháng:"
+        android:enabled="false"
         android:padding="16dp"
         app:layout_constraintStart_toStartOf="@+id/thongke_spinner"
         app:layout_constraintTop_toBottomOf="@+id/thongke_spinner" />
@@ -44,7 +45,7 @@
         android:background="@drawable/button_addcattory"
         app:layout_constraintBottom_toTopOf="@+id/lvThongKe"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edDate_ThongKe_Layout"
+        app:layout_constraintStart_toEndOf="@+id/edDate_ThongKe"
         app:layout_constraintTop_toBottomOf="@+id/thongke_spinner" />
 
     <ListView
@@ -60,7 +61,7 @@
     </ListView>
 
     <TextView
-        android:id="@+id/tvTongTien"
+        android:id="@+id/tvTongTien1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Tổng tiền: "

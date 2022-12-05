@@ -1,5 +1,6 @@
 package com.sinhvien.orderdrinkapp.Fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -32,13 +34,14 @@ import com.sinhvien.orderdrinkapp.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
 public class DisplayThongKeFragment extends Fragment {
 Spinner thongkespinner, monthspinner;
 ListView lvThongKe;
-EditText edDate_ThongKe;
+TextView edDate_ThongKe;
 TextView btnSearch, tvTongTien;
 List<DonDatDTO> donDatDTOList;
 DonDatDAO donDatDAO;
@@ -49,10 +52,11 @@ List<NhanVienDTO> listNhanVien;
 NhanVienSpinnerAdapter nvspAdapter;
 Context context;
     int madon,manv, maban;
-    long tongtien;
+    int tongtien=0;
     String ngaydat, thang;
     int manv1=1;
-
+    SimpleDateFormat date1 = new SimpleDateFormat("dd-MM-yyyy");
+    int mYear , mMonth , mDay;
     public DisplayThongKeFragment() {
         // Required empty public constructor
     }
@@ -66,10 +70,11 @@ Context context;
         View view =  inflater.inflate(R.layout.fragment_display_thong_ke, container, false);
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Quản lý thống kê");
         setHasOptionsMenu(true);
+        int tongtien1;
         lvThongKe = view.findViewById(R.id.lvThongKe);
         edDate_ThongKe = view.findViewById(R.id.edDate_ThongKe);
         btnSearch = view.findViewById(R.id.btnSreach);
-        tvTongTien = view.findViewById(R.id.tvTongTien);
+        tvTongTien = view.findViewById(R.id.tvTongTien1);
         //sự kiện spinner
         nhanVienDAO = new NhanVienDAO(getActivity());
         thongkespinner = view.findViewById(R.id.thongke_spinner);
@@ -79,29 +84,51 @@ Context context;
         thongkespinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tongtien =0;
                 manv = listNhanVien.get(position).getMANV();
                 Log.d("zzzz", "onItemSelected: manv"+ manv);
                 Toast.makeText(getContext(), "Chọn: "+ listNhanVien.get(position).getHOTENNV(), Toast.LENGTH_SHORT).show();
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                thang = dateFormat.format(calendar.getTime());
-                edDate_ThongKe.setEnabled(false);
+//                thang = dateFormat.format(calendar.getTime());
+                edDate_ThongKe.setEnabled(true);
                 edDate_ThongKe.setTextColor(Color.BLACK);
-                edDate_ThongKe.setText(thang);
+//                edDate_ThongKe.setText(thang);
+                edDate_ThongKe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Calendar calendar = Calendar.getInstance();
+                        mYear = calendar.get(Calendar.YEAR);
+                        mMonth= calendar.get(Calendar.MONTH);
+                        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog dialog = new DatePickerDialog(getActivity() , 0 , mDateTuNgay  , mYear , mMonth , mDay);
+                        dialog.show();
+                    }
+                });
 
                 btnSearch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        donDatDTOList = new ArrayList<>();
                         if (edDate_ThongKe.getText().equals("")|| manv <=0){
                             Toast.makeText(getActivity(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }else {
                             donDatDAO = new DonDatDAO(getActivity());
-                            donDatDTOList = donDatDAO.LayDSDonDatMaNV(manv, thang);
+                            donDatDTOList = donDatDAO.LayDSDonDatMaNV(manv, edDate_ThongKe.getText().toString());
                             adapterThongKe = new AdapterDisplayStatistic(getActivity(), R.layout.custom_layout_displaystatistic, donDatDTOList);
                             lvThongKe.setAdapter(adapterThongKe);
 //                            tongtien = Long.parseLong(String.valueOf(donDatDAO.getDoanhThu(manv, thang)));
 //                            tvTongTien.setText("Tổng tiền: "+ tongtien);
                             adapterThongKe.notifyDataSetChanged();
+
+                            //tổng doanh thu
+                            for (int i=0; i<donDatDTOList.size();i++){
+                                 tongtien = tongtien+ Integer.parseInt(donDatDTOList.get(i).getTongTien());
+                                Log.d("zzzz", "onClick: Tổng tiền+ "+ tongtien);
+                            }
+                            tvTongTien.setText("Tổng tiền: "+ tongtien);
+                            Log.d("zzzz", "onClick: Tổng tiền 2"+tvTongTien);
 
                         }
                     }
@@ -122,4 +149,16 @@ Context context;
 
         return view;
     }
+
+    DatePickerDialog.OnDateSetListener mDateTuNgay = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            mYear = i;
+            mMonth = i1;
+            mDay = i2;
+            GregorianCalendar calendar = new GregorianCalendar(mYear, mMonth , mDay);
+            edDate_ThongKe.setText(date1.format(calendar.getTime()));
+
+        }
+    };
 }
