@@ -1,7 +1,5 @@
 package com.sinhvien.orderdrinkapp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +8,12 @@ import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sinhvien.orderdrinkapp.DAO.NhanVienDAO;
 import com.sinhvien.orderdrinkapp.R;
@@ -20,6 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     Button BTN_login_DangNhap, BTN_login_DangKy;
     TextInputLayout TXTL_login_TenDN, TXTL_login_MatKhau;
     NhanVienDAO nhanVienDAO;
+    CheckBox checkBo;
+    TextInputEditText tdn,mkdn;
+    String User,Pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +32,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
 
         //thuộc tính view
+        tdn=(TextInputEditText)findViewById(R.id.tdn);
+        mkdn=(TextInputEditText)findViewById(R.id.mkdn);
+        checkBo=(CheckBox)findViewById(R.id.luuthongtin);
         TXTL_login_TenDN = (TextInputLayout)findViewById(R.id.txtl_login_TenDN);
         TXTL_login_MatKhau = (TextInputLayout)findViewById(R.id.txtl_login_MatKhau);
         BTN_login_DangNhap = (Button)findViewById(R.id.btn_login_DangNhap);
         BTN_login_DangKy = (Button)findViewById(R.id.btn_login_DangKy);
 
         nhanVienDAO = new NhanVienDAO(this);    //khởi tạo kết nối csdl
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = sharedPreferences.getString("USERNAME", "");
+        String pass = sharedPreferences.getString("PASSWORD", "");
+        Boolean rem = sharedPreferences.getBoolean("REMEMBER", false);
+        //
+        tdn.setText(user);
+        mkdn.setText(pass);
+        checkBo.setChecked(rem);
 
         BTN_login_DangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +64,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(ktra != 0){
                     // lưu mã quyền vào shareprefer
                     SharedPreferences sharedPreferences = getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor =sharedPreferences.edit();
+                    rememberUser(tenDN , matKhau , checkBo.isChecked());
+                   SharedPreferences.Editor editor =sharedPreferences.edit();
                     editor.putInt("maquyen",maquyen);
                     editor.commit();
-
+//                    Toast.makeText(LoginActivity.this, "Thanh Cong", Toast.LENGTH_SHORT).show();
                     //gửi dữ liệu user qua trang chủ
                     Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                     intent.putExtra("tendn",TXTL_login_TenDN.getEditText().getText().toString());
@@ -117,4 +134,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     //endregion
+    public void rememberUser(String u, String p, boolean status) {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        if(!status){
+            //nết k check vào chk
+            edit.clear();
+        }else{
+            //check r thì lưu data
+            edit.putString("USERNAME" , u);
+            edit.putString("PASSWORD" , p);
+            edit.putBoolean("REMEMBER",status);
+        }
+        //lưu data
+        edit.commit();
+    }
+
+
 }

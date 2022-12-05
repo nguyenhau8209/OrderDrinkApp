@@ -11,7 +11,24 @@
             android:id="@+id/nav_statistic"
             android:title="Thống kê"
             android:icon="@drawable/ic_baseline_bar_chart_24"/>
-
+        <item android:title="Doanh thu">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_thongke"
+                        android:title="Thống kê theo nhân viên"
+                        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+                    <item
+                        android:id="@+id/nav_doanhthu"
+                        android:title="Doanh thu"
+                        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+                    <item
+                        android:id="@+id/nav_top10"
+                        android:title="Top bán chạy"
+                        android:icon="@drawable/ic_baseline_bar_chart_24"/>
+                </group>
+            </menu>
+        </item>
         <item android:title="Quản lý">
             <menu>
                 <group android:checkableBehavior="single">

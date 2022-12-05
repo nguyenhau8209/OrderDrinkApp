@@ -13,7 +13,7 @@ import com.sinhvien.orderdrinkapp.DAO.BanAnDAO;
 import com.sinhvien.orderdrinkapp.R;
 
 public class AddTableActivity extends AppCompatActivity {
-
+//thêm bàn
     TextInputLayout TXTL_addtable_tenban;
     Button BTN_addtable_TaoBan;
     BanAnDAO banAnDAO;

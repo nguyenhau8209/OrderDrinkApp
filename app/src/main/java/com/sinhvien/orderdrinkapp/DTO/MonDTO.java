@@ -5,6 +5,25 @@ public class MonDTO {
     int MaMon, MaLoai;
     String TenMon,GiaTien,TinhTrang;
     byte[] HinhAnh;
+    int soluong;
+
+    public MonDTO(int maMon, String tenMon, int soluong) {
+        MaMon = maMon;
+        TenMon = tenMon;
+        this.soluong = soluong;
+    }
+
+    public MonDTO() {
+
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
+    }
 
     public int getMaMon() {
         return MaMon;
