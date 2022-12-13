@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sinhvien.orderdrinkapp.DAO.NhanVienDAO;
+import com.sinhvien.orderdrinkapp.DTO.NhanVienDTO;
 import com.sinhvien.orderdrinkapp.R;
 
 public class LoginActivity extends AppCompatActivity {
     Button BTN_login_DangNhap, BTN_login_DangKy;
     TextInputLayout TXTL_login_TenDN, TXTL_login_MatKhau;
     NhanVienDAO nhanVienDAO;
+    NhanVienDTO nhanVienDTO;
     CheckBox checkBo;
     TextInputEditText tdn,mkdn;
     String User,Pass;
@@ -68,11 +71,15 @@ public class LoginActivity extends AppCompatActivity {
                    SharedPreferences.Editor editor =sharedPreferences.edit();
                     editor.putInt("maquyen",maquyen);
                     editor.commit();
+                    nhanVienDTO = new NhanVienDTO();
+                    nhanVienDTO.getMANV();
+                    Log.d("zzzz", "manv: "+ nhanVienDTO);
 //                    Toast.makeText(LoginActivity.this, "Thanh Cong", Toast.LENGTH_SHORT).show();
                     //gửi dữ liệu user qua trang chủ
                     Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                     intent.putExtra("tendn",TXTL_login_TenDN.getEditText().getText().toString());
                     intent.putExtra("manv",ktra);
+                    Log.d("zzzz", "onClick: intent: "+intent);
                     startActivity(intent);
                 }else {
                     Toast.makeText(getApplicationContext(),"Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();

@@ -41,7 +41,7 @@ import java.util.List;
 public class DisplayThongKeFragment extends Fragment {
 Spinner thongkespinner, monthspinner;
 ListView lvThongKe;
-TextView edDate_ThongKe;
+TextView tvtuNgay, tvdenNgay;
 TextView btnSearch, tvTongTien;
 List<DonDatDTO> donDatDTOList;
 DonDatDAO donDatDAO;
@@ -72,7 +72,8 @@ Context context;
         setHasOptionsMenu(true);
         int tongtien1;
         lvThongKe = view.findViewById(R.id.lvThongKe);
-        edDate_ThongKe = view.findViewById(R.id.edDate_ThongKe);
+        tvtuNgay = view.findViewById(R.id.edDate_tuNgay);
+        tvdenNgay = view.findViewById(R.id.edDate_denNgay);
         btnSearch = view.findViewById(R.id.btnSreach);
         tvTongTien = view.findViewById(R.id.tvTongTien1);
         //sự kiện spinner
@@ -91,10 +92,8 @@ Context context;
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 //                thang = dateFormat.format(calendar.getTime());
-                edDate_ThongKe.setEnabled(true);
-                edDate_ThongKe.setTextColor(Color.BLACK);
-//                edDate_ThongKe.setText(thang);
-                edDate_ThongKe.setOnClickListener(new View.OnClickListener() {
+
+                tvtuNgay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Calendar calendar = Calendar.getInstance();
@@ -106,16 +105,28 @@ Context context;
                     }
                 });
 
+                tvdenNgay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Calendar calendar = Calendar.getInstance();
+                        mYear = calendar.get(Calendar.YEAR);
+                        mMonth= calendar.get(Calendar.MONTH);
+                        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                        DatePickerDialog dialog = new DatePickerDialog(getActivity() , 0 , mDateDenNgay  , mYear , mMonth , mDay);
+                        dialog.show();
+                    }
+                });
+
                 btnSearch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         donDatDTOList = new ArrayList<>();
-                        if (edDate_ThongKe.getText().equals("")|| manv <=0){
+                        if (tvtuNgay.getText().equals("")||tvdenNgay.getText().equals("")|| manv <=0){
                             Toast.makeText(getActivity(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                         }else {
                             donDatDAO = new DonDatDAO(getActivity());
-                            donDatDTOList = donDatDAO.LayDSDonDatMaNV(manv, edDate_ThongKe.getText().toString());
+                            donDatDTOList = donDatDAO.LayDSDonDatTenDN(manv, tvtuNgay.getText().toString(), tvdenNgay.getText().toString());
                             adapterThongKe = new AdapterDisplayStatistic(getActivity(), R.layout.custom_layout_displaystatistic, donDatDTOList);
                             lvThongKe.setAdapter(adapterThongKe);
 //                            tongtien = Long.parseLong(String.valueOf(donDatDAO.getDoanhThu(manv, thang)));
@@ -157,7 +168,18 @@ Context context;
             mMonth = i1;
             mDay = i2;
             GregorianCalendar calendar = new GregorianCalendar(mYear, mMonth , mDay);
-            edDate_ThongKe.setText(date1.format(calendar.getTime()));
+            tvtuNgay.setText(date1.format(calendar.getTime()));
+
+        }
+    };
+    DatePickerDialog.OnDateSetListener mDateDenNgay = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+            mYear = i;
+            mMonth = i1;
+            mDay = i2;
+            GregorianCalendar calendar = new GregorianCalendar(mYear, mMonth , mDay);
+            tvdenNgay.setText(date1.format(calendar.getTime()));
 
         }
     };

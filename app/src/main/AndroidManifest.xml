@@ -10,7 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OrderDrinkApp">
-        <activity android:name=".Activities.DetailStatisticActivity"></activity>
+        <activity
+            android:name=".Activities.testThongKeNhanVienActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".Activities.DetailStatisticActivity" />
         <activity android:name=".Activities.AddStaffActivity" />
         <activity
             android:name=".Activities.EditTableActivity"
