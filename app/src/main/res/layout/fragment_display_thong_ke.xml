@@ -13,50 +13,71 @@
         android:layout_margin="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:popupBackground="@drawable/drawable_addcattory"
+        android:backgroundTint="@color/black"
         android:backgroundTintMode="multiply"
-        android:backgroundTint="@color/black">
+        android:popupBackground="@drawable/drawable_addcattory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </Spinner>
 
     <TextView
-        android:id="@+id/edDate_ThongKe"
-        android:layout_width="wrap_content"
+        android:id="@+id/edDate_tuNgay"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/drawable_addcattory"
+        android:enabled="true"
+        android:hint="Từ ngày"
+        android:padding="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnSreach"
+        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintStart_toStartOf="@+id/thongke_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/thongke_spinner" />
+
+    <TextView
+        android:id="@+id/edDate_denNgay"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/drawable_addcattory"
-        android:hint="Nhập vào tháng:"
-        android:enabled="false"
+        android:enabled="true"
+        android:hint="Đến ngày"
         android:padding="16dp"
-        app:layout_constraintStart_toStartOf="@+id/thongke_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/thongke_spinner" />
+        app:layout_constraintEnd_toStartOf="@+id/btnSreach"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edDate_tuNgay"
+        app:layout_constraintTop_toBottomOf="@+id/edDate_tuNgay" />
 
     <TextView
         android:id="@+id/btnSreach"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:text="Tìm kiếm"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_addcattory"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="Tìm kiếm"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
-        android:background="@drawable/button_addcattory"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/lvThongKe"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edDate_ThongKe"
-        app:layout_constraintTop_toBottomOf="@+id/thongke_spinner" />
+        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintStart_toEndOf="@+id/edDate_tuNgay"
+        app:layout_constraintTop_toBottomOf="@+id/thongke_spinner"
+        app:layout_constraintVertical_bias="0.482" />
 
     <ListView
         android:id="@+id/lvThongKe"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edDate_ThongKe">
+        app:layout_constraintTop_toBottomOf="@+id/edDate_denNgay">
 
     </ListView>
 
@@ -64,18 +85,19 @@
         android:id="@+id/tvTongTien1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Tổng tiền: "
         android:layout_margin="16dp"
-        android:gravity="center"
-        android:textAlignment="textStart"
-        android:paddingStart="16dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/black"
         android:background="@drawable/drawable_addcattory"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:text="Tổng tiền: "
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lvThongKe" />
+        app:layout_constraintTop_toBottomOf="@+id/lvThongKe"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

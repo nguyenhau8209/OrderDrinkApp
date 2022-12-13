@@ -63,6 +63,19 @@ public class NhanVienDAO {
         return manv;
     }
 
+    public int Laymadangnhap(String tenDN){
+        String query = "SELECT * FROM " +CreateDatabase.TBL_NHANVIEN+ " WHERE "
+                +CreateDatabase.TBL_NHANVIEN_TENDN +" = '"+ tenDN+"'";
+        int manv = 0;
+        Cursor cursor = database.rawQuery(query,null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            manv = cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_NHANVIEN_MANV)) ;
+            cursor.moveToNext();
+        }
+        return manv;
+    }
+
     public boolean KtraTonTaiNV(){
         String query = "SELECT * FROM "+CreateDatabase.TBL_NHANVIEN;
         Cursor cursor =database.rawQuery(query,null);

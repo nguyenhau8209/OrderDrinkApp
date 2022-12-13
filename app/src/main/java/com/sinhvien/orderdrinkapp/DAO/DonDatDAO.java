@@ -98,6 +98,25 @@ public class DonDatDAO {
         }
         return donDatDTOS;
     }
+    public List<DonDatDTO> LayDSDonDatTenDN(int manv, String min, String max){
+        List<DonDatDTO> donDatDTOS = new ArrayList<DonDatDTO>();
+        String query = "SELECT * FROM DONDAT WHERE MANV ="+ manv +" AND "+CreateDatabase.TBL_DONDAT_NGAYDAT+" between ? and ?";
+        Cursor cursor = database.rawQuery(query,new String[]{min, max});
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            DonDatDTO donDatDTO = new DonDatDTO();
+            donDatDTO.setMaDonDat(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_MADONDAT)));
+            donDatDTO.setMaBan(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_MABAN)));
+            donDatDTO.setTongTien(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_TONGTIEN)));
+            donDatDTO.setTinhTrang(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_TINHTRANG)));
+            donDatDTO.setNgayDat(cursor.getString(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_NGAYDAT)));
+            donDatDTO.setMaNV(cursor.getInt(cursor.getColumnIndex(CreateDatabase.TBL_DONDAT_MANV)));
+            donDatDTOS.add(donDatDTO);
+
+            cursor.moveToNext();
+        }
+        return donDatDTOS;
+    }
 
     public long LayMaDonTheoMaBan(int maban, String tinhtrang){
         String query = "SELECT * FROM " +CreateDatabase.TBL_DONDAT+ " WHERE " +CreateDatabase.TBL_DONDAT_MABAN+ " = '" +maban+ "' AND "

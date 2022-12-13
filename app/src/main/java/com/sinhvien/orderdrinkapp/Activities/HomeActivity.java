@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.sinhvien.orderdrinkapp.Fragments.DisplayStaffFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayStatisticFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayTableFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayThongKeFragment;
+import com.sinhvien.orderdrinkapp.Fragments.DisplayThongKeTungNhanVienFragment;
 import com.sinhvien.orderdrinkapp.Fragments.DisplayTurnoverFragment;
 import com.sinhvien.orderdrinkapp.Fragments.FrmTop;
 import com.sinhvien.orderdrinkapp.R;
@@ -33,7 +35,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     Toolbar toolbar;
     FragmentManager fragmentManager;
-    TextView TXT_menu_tennv;
+    TextView TXT_menu_tennv,tvTennv;
     int maquyen = 0;
     SharedPreferences sharedPreferences;
 
@@ -48,6 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         View view = navigationView.getHeaderView(0);
         TXT_menu_tennv = (TextView) view.findViewById(R.id.txt_menu_tennv);
+        tvTennv = view.findViewById(R.id.txt_menu_tennv2);
         //endregion
 
         //xử lý toolbar và navigation
@@ -70,7 +73,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //Tụ động gán tên nv đăng nhập qua Extras
         Intent intent = getIntent();
         String tendn = intent.getStringExtra("tendn");
-        TXT_menu_tennv.setText( "Xin chào " + tendn +" !!");
+        Log.d("zzzz", "HomeActivity: Tên đăng nhập: "+tendn);
+        tvTennv.setText(tendn);
 
         //lấy file share prefer
         sharedPreferences = getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
@@ -100,22 +104,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_statistic:
-                //hiển thị tương ứng trên navigation
-                FragmentTransaction tranDisplayStatistic = fragmentManager.beginTransaction();
-                DisplayStatisticFragment displayStatisticFragment = new DisplayStatisticFragment();
-                tranDisplayStatistic.replace(R.id.contentView,displayStatisticFragment);
-                tranDisplayStatistic.commit();
-                navigationView.setCheckedItem(item.getItemId());
-                drawerLayout.closeDrawers();
+                if(maquyen == 1) {
+                    //hiển thị tương ứng trên navigation
+                    FragmentTransaction tranDisplayStatistic = fragmentManager.beginTransaction();
+                    DisplayStatisticFragment displayStatisticFragment = new DisplayStatisticFragment();
+                    tranDisplayStatistic.replace(R.id.contentView, displayStatisticFragment);
+                    tranDisplayStatistic.commit();
+                    navigationView.setCheckedItem(item.getItemId());
+                    drawerLayout.closeDrawers();
+                } else {
+                    Toast.makeText(this, "Bạn không có quyền truy cập chức năng này!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_thongke:
-                //hiển thị tương ứng trên navigation
-                FragmentTransaction tranDisplayThongKe = fragmentManager.beginTransaction();
-                DisplayThongKeFragment displayThongKeFragment = new DisplayThongKeFragment();
-                tranDisplayThongKe.replace(R.id.contentView,displayThongKeFragment);
-                tranDisplayThongKe.commit();
-                navigationView.setCheckedItem(item.getItemId());
-                drawerLayout.closeDrawers();
+                if (maquyen==1) {
+                    //hiển thị tương ứng trên navigation
+                    FragmentTransaction tranDisplayThongKe = fragmentManager.beginTransaction();
+                    DisplayThongKeFragment displayThongKeFragment = new DisplayThongKeFragment();
+                    tranDisplayThongKe.replace(R.id.contentView, displayThongKeFragment);
+                    tranDisplayThongKe.commit();
+                    navigationView.setCheckedItem(item.getItemId());
+                    drawerLayout.closeDrawers();
+                }else {
+                    //put lên intent
+                    Intent intent1 = new Intent(getApplicationContext(), testThongKeNhanVienActivity.class);
+                    intent1.putExtra("tendn1", tvTennv.getText().toString());
+                    startActivity(intent1);
+                }
                 break;
 
             case R.id.nav_doanhthu:
